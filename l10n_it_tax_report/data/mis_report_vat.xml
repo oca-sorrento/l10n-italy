@@ -4,17 +4,95 @@
     <record id="mis_report_vat" model="mis.report">
       <field name="name">VAT</field>
     </record>
+    <record id="total" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">total</field>
+      <field name="description">Totale</field>
+      <field name="expression">+iva_a_debito+iva_a_credito</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">1</field>
+      <field name="default_css_style">font-weight: bold</field>
+    </record>
+    <record id="iva_a_debito" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">iva_a_debito</field>
+      <field name="description">IVA a debito</field>
+      <field name="expression">+iva_22v+iva_10v</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">2</field>
+    </record>
     <record id="22v" model="mis.report.kpi">
       <field ref="mis_report_vat" name="report_id"/>
       <field name="name">iva_22v</field>
-      <field name="description">Iva al 22% (debito)</field>
+      <field name="description">Iva al 22%</field>
       <field name="expression">bal[][('tax_line_id.tag_ids.name', '=', '22v')]</field>
       <field name="suffix">€</field>
-      <field name="type">num</field>
       <field name="dp">2</field>
-      <field name="compare_method">pct</field>
+      <field name="sequence">3</field>
       <field name="default_css_style">font-style: italic</field>
-      <field name="sequence">10</field>
     </record>
+    <record id="10v" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">iva_10v</field>
+      <field name="description">Iva al 10%</field>
+      <field name="expression">bal[][('tax_line_id.tag_ids.name', '=', '10v')]</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">4</field>
+      <field name="default_css_style">font-style: italic</field>
+    </record>
+    <record id="iva_a_credito" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">iva_a_credito</field>
+      <field name="description">IVA a credito</field>
+      <field name="expression">+iva_22a++iva_10a+iva_22I5b</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">5</field>
+    </record>
+    <record id="22a" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">iva_22a</field>
+      <field name="description">Iva al 22%</field>
+      <field name="expression">bal[][('tax_line_id.tag_ids.name', '=', '22a')]</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">6</field>
+      <field name="default_css_style">font-style: italic</field>
+    </record>
+    <record id="10a" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">iva_10a</field>
+      <field name="description">Iva al 10%</field>
+      <field name="expression">bal[][('tax_line_id.tag_ids.name', '=', '10a')]</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">7</field>
+      <field name="default_css_style">font-style: italic</field>
+    </record>
+    <record id="22I5b" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">iva_22I5b</field>
+      <field name="description">IVA al 20% detraibile al 50%</field>
+      <field name="expression">bal[][('tax_line_id.description', '=', '22I5b')]</field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">8</field>
+      <field name="default_css_style">font-style: italic</field>
+    </record>
+    <!--
+    <record id="total_undeductible" model="mis.report.kpi">
+      <field ref="mis_report_vat" name="report_id"/>
+      <field name="name">total_undeductible</field>
+      <field name="description">Totale indetrabile</field>
+      <field name="expression"></field>
+      <field name="suffix">€</field>
+      <field name="dp">2</field>
+      <field name="sequence">9</field>
+      <field name="default_css_style">font-weight: bold</field>
+    </record>
+    -->
   </data>
 </openerp>
